@@ -48,7 +48,7 @@ print("Logistic Regression")
 print("Accuracy:", accuracy_score(y_test, lr_preds))
 print(classification_report(y_test, lr_preds, target_names=["Not Trending", "Trending"]))#found this in an implementation for sklearn
 
-fig, ax = plt.subplots()#used Matplot and ConfusionDisplay to make charts on the model
+fig, ax =plt.subplots()#used Matplot and ConfusionDisplay to make charts on the model
 ConfusionMatrixDisplay(confusion_matrix(y_test, lr_preds), display_labels=["Not Trending", "Trending"]).plot(ax=ax)
 ax.set_title("Logistic Regression — Confusion Matrix")
 fig.tight_layout()
@@ -81,19 +81,19 @@ print("Enter details about the Netflix title:")
 
 content_type = input("Type (Movie / TV Show): ").strip()#this is the basic input function in python so i can get user input and use it and store it. i cleaned it before storing so it works 
 genre = input("Primary Genre (e.g. dramas, comedies, documentaries): ").strip().lower()
-release_year = int(input("Release Year (e.g. 2021): ").strip())
+release_year= int(input("Release Year (e.g. 2021): ").strip())
 rating = input("Content Rating (e.g. TV-MA, PG-13, R): ").strip()
-country = input("Country of Origin (e.g. United States, India): ").strip()
+country =input("Country of Origin (e.g. United States, India): ").strip()
 duration = int(input("Duration (minutes if Movie, seasons if TV Show): ").strip())
-has_known_actor = input("Does it feature a known/established actor? (yes / no): ").strip().lower()
+has_known_actor= input("Does it feature a known/established actor? (yes / no): ").strip().lower()
 age = 2026 - release_year #this is my calculations for what need to be cleaned before predicting
 is_recent = int(release_year >= 2015)
-is_tv = int(content_type == "TV Show")
+is_tv =int(content_type == "TV Show")
 is_us = int(country.lower() == "united states")
-known = int(has_known_actor == "yes")#just the basic cleaning
+known =int(has_known_actor == "yes")#just the basic cleaning
 input_df = pd.DataFrame([{"release_year":release_year,"age":age,"is_recent": is_recent,"duration_num": duration, "is_tv":is_tv, "is_us":is_us,"has_known_actor":known,"rating":rating,"genre_primary":genre}])
-lr_prob = lr_model.predict_proba(input_df)[0][1]#just the function to predict on the stuff learned by the model
-rf_prob = rf_model.predict_proba(input_df)[0][1]
+lr_prob =lr_model.predict_proba(input_df)[0][1]#just the function to predict on the stuff learned by the model
+rf_prob= rf_model.predict_proba(input_df)[0][1]
 avg_prob = (lr_prob + rf_prob) / 2
 
 if lr_prob >= 0.5:#just basic above 50% means yes below means no in terms of trending content
