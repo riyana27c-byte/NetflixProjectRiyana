@@ -27,8 +27,8 @@ save("1type.png", "Movie vs TV Show Split")#use method to save graph
 genre_exploded = df.copy()#same concept reexploded genre for the graph with the same functions I used before everywhere
 genre_exploded["genre"] = genre_exploded["listed_in"].str.split(",")
 genre_exploded = genre_exploded.explode("genre")
-genre_exploded["genre"] = genre_exploded["genre"].str.strip()
-genre_exploded["genre"] = genre_exploded["genre"].str.lower()
+genre_exploded["genre"] =genre_exploded["genre"].str.strip()
+genre_exploded["genre"] =genre_exploded["genre"].str.lower()
 
 top_genres = genre_exploded["genre"].value_counts()#counts how many titles each genre appears in
 top_genres = top_genres.head(10)#only want top 10 genres
@@ -39,8 +39,8 @@ plt.xlabel("Unique Titles")#save title after specifying chart type
 save("2topgenres.png", "Top 10 Genres by Title Count")
 
 
-titles_per_year = df["year_added"].value_counts()
-titles_per_year = titles_per_year.sort_index()#sorting by year and not by count so the line goes left to right in order
+titles_per_year= df["year_added"].value_counts()
+titles_per_year =titles_per_year.sort_index()#sorting by year and not by count so the line goes left to right in order
 titles_per_year.plot(kind="line", marker="o", color="steelblue")#color change with documentation
 
 plt.ylabel("Titles Added")
@@ -58,15 +58,15 @@ plt.xlabel("Count")#label sides
 save("4topcountry.png", "Top 15 Producing Countries")
 
 
-top_ratings = df["rating"].value_counts()#counts the number of times a certain rating is given to a titles so like TV_MA is given a _ amount of times
-top_ratings = top_ratings.head(10)#takes top 10 ratings given
+top_ratings =df["rating"].value_counts()#counts the number of times a certain rating is given to a titles so like TV_MA is given a _ amount of times
+top_ratings =top_ratings.head(10)#takes top 10 ratings given
 top_ratings.plot(kind="bar")#makes bar chart
 
 plt.ylabel("Count")
 plt.xticks(rotation=45)#labels my axis
 save("5ratingdist.png", "Content Rating Distribution")
 
-imdb_ratings = df["imdb_rating"].dropna()#removes all entries where rating not given and put this into a db of its own so not affect original db
+imdb_ratings= df["imdb_rating"].dropna()#removes all entries where rating not given and put this into a db of its own so not affect original db
 plt.hist(imdb_ratings, bins=30, color="steelblue", edgecolor="white")#color of chart, used matpllot documentation
 
 plt.xlabel("IMDb Rating")#my chart labels 
@@ -74,16 +74,16 @@ plt.ylabel("Count")
 save("6imdbratings.png", "IMDb Rating Distribution")
 
 
-colors = df["trending"].map({0: "steelblue", 1: "tomato"})#mappin 0 and 1 to colors so trending titles show up differently. trending just means more than 10000 votes, nothing else
+colors =df["trending"].map({0: "steelblue", 1: "tomato"})#mappin 0 and 1 to colors so trending titles show up differently. trending just means more than 10000 votes, nothing else
 
 plt.scatter(df["imdb_rating"], df["imdb_votes"], c=colors, alpha=0.4, s=12)#played with alpha from documentation it makes dots more visible
 plt.xlabel("IMDb Rating")#name the axis for both sides
 plt.ylabel("IMDb Votes")
 plt.yscale("log")#votes vary too much so cgpt from codebench said log would look cleaner
 
-trending_dot     = Line2D([0], [0], marker="o", color="w", markerfacecolor="tomato",   label="Trending")#from documentation makes lines much cleaner I did not have this before so my chart was notclean
+trending_dot= Line2D([0], [0], marker="o", color="w", markerfacecolor="tomato",   label="Trending")#from documentation makes lines much cleaner I did not have this before so my chart was notclean
 not_trending_dot = Line2D([0], [0], marker="o", color="w", markerfacecolor="steelblue", label="Not Trending")
-legend_handles   = [trending_dot, not_trending_dot]
+legend_handles= [trending_dot, not_trending_dot]
 
 plt.legend(handles=legend_handles)#all from 2D lines implementation documentation, which 2D lines was suggest by Cgpt from codebench
 save("7ratingvsvotes.png", "IMDb Rating vs Votes)")
@@ -98,8 +98,8 @@ q6 = pd.read_sql_query("""
     JOIN engagement e ON t.title_id = e.title_id
     GROUP BY t.has_known_actor
 """, conn)
-q8_indexed = q6.set_index("cast_tier")#used documentation and active book to make a visual out of the query results
-q8_indexed = q8_indexed[["trending_pct", "avg_rating"]]
+q8_indexed= q6.set_index("cast_tier")#used documentation and active book to make a visual out of the query results
+q8_indexed =q8_indexed[["trending_pct", "avg_rating"]]
 q8_indexed.plot(kind="bar")
 plt.xticks(rotation=0)
 plt.ylabel("Value")#labeled my axis of course
